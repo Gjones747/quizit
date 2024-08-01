@@ -11,10 +11,25 @@ interface loginRequst {
 
 
 
+// info sent in the create account post request
+interface userCreateInfo {
+    username:string;
+    email:string;
+    password:string;
+}
+
+
+
 // models for future db
 
-interface userAuthInfo {
-    userId:string;
+interface refreshResponse {
+    id:number,
+    userId:number,
+    refreshToken:string,
+}
+
+interface userInfo {
+    userId:number;
     username:string;
     email:string;
     password:string;
@@ -24,15 +39,19 @@ interface userAuthInfo {
 
 // models for jwt creation
 
+// this is the info stored in the user token
 interface userEncodedInfo {
-    userId:string,
-    username:string
+    username:string;
+    email:string;
+    userId:number; 
 }
 
 
 export {
     loginRequst,
+    userCreateInfo,
     tokenResponse,
-    userAuthInfo,
+    userInfo,
     userEncodedInfo,
+    refreshResponse,
 }
