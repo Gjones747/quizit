@@ -16,14 +16,15 @@ const pool = mysql.createPool({
 
 const getRefreshDB = async (userId:number, token:string) => {
     const [refreshResponse] = await pool.query(`SELECT * from RefreshTokens WHERE user_id = ? AND refresh_token = ?`, [userId, token]);
-
     console.log(refreshResponse)
 }
 
-
-
-
-
+async function storeRefreshKey(userId:Number, refresh_token:string) {
+    await pool.query(`
+    INSERT into RefreshTokens (user_id, refresh_token)
+    VALUES (?, ?)
+    `, [userId, refresh_token])
+}
 
 
 export {
