@@ -1,3 +1,6 @@
+import mysql, { RowDataPacket } from "mysql2"
+
+
 // models for endpoint requests/responses
 interface tokenResponse {
     token:string;
@@ -28,7 +31,7 @@ interface refreshResponse {
     refreshToken:string,
 }
 
-interface userInfo {
+interface userInfo extends RowDataPacket {
     userId:number;
     username:string;
     email:string;

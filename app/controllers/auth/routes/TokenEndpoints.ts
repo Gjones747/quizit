@@ -1,27 +1,31 @@
 import express, {Request, Response} from 'express'
 import bodyParser from 'body-parser'
 
-import { createUser } from '../../../db/user/user'
+import { createUser } from '../../user/db/user'
 
 import { loginRequst, tokenResponse, userEncodedInfo, userCreateInfo } from '../../../models/authModels'
+import { validatePassword } from '../../../auth/validate'
+import Token from '../../../auth/token'
 
 const router = express.Router()
 
 const jsonParser = bodyParser.json()
 
-router.get("/", (req, res) => {
-    res.send("made it to auth")
-})
 
-router.post("/signup", async (req:Request, res:Response) => {
-    const userInfo:userCreateInfo = req.body;
-
-
+router.post("/login", async (req:Request, res:Response) => {
+    const userInfo:loginRequst = req.body;
     try {
-        await createUser(userInfo);
-        res.sendStatus(201)
+        const encodedInfo = await validatePassword(userInfo)
+
+        if (encodedInfo[2]) {
+            res.send(Token.createTokenPair(encodedInfo[0]))
+        } else {
+            res.send(encodedInfo[1])
+        }
+
     } catch (err) {
-        res.sendStatus(409)
+        console.log(err)
+        res.send('incorrect email or password')
     }
 })
 

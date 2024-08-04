@@ -2,7 +2,7 @@ require("dotenv").config()
 const jwt = require('jsonwebtoken')
 import express, { Request, Response, NextFunction } from "express";
 import {  tokenResponse, userEncodedInfo } from "../models/authModels";
-import { checkRefreshDB } from "../db/auth/refresh";
+import { getRefreshDB } from "../controllers/auth/db/token";
 
 const TOKEN_SETTINGS:{} = {expiresIn: '20s'}
 

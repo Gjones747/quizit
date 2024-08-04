@@ -1,7 +1,8 @@
 import mysql from "mysql2"
 import dotenv from "dotenv"
+import bcrypt from 'bcrypt'
 
-import { refreshResponse } from "../../models/authModels"
+import { loginRequst, refreshResponse, userInfo } from "../../../models/authModels"
 
 dotenv.config();
 
@@ -13,17 +14,18 @@ const pool = mysql.createPool({
 }).promise()
 
 
-const checkRefreshDB = async (userId:number, token:string) => {
+const getRefreshDB = async (userId:number, token:string) => {
     const [refreshResponse] = await pool.query(`SELECT * from RefreshTokens WHERE user_id = ? AND refresh_token = ?`, [userId, token]);
 
     console.log(refreshResponse)
-
 }
 
 
 
 
-export {
-    checkRefreshDB,
 
+
+
+export {
+    getRefreshDB,
 }
