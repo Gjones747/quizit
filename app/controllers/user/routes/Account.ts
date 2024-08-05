@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express'
 import bodyParser from 'body-parser'
 
-import { createUser } from '../db/user'
+import { createUser } from '../../../db/user/user'
 
 import { loginRequst, tokenResponse, userEncodedInfo, userCreateInfo } from '../../../models/authModels'
 
@@ -9,7 +9,7 @@ const router = express.Router()
 
 const jsonParser = bodyParser.json()
 
-
+// create
 router.post("/signup", async (req:Request, res:Response) => {
     const userInfo:userCreateInfo = req.body;
     try {

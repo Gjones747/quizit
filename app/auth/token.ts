@@ -2,18 +2,23 @@ require("dotenv").config()
 const jwt = require('jsonwebtoken')
 import express, { Request, Response, NextFunction } from "express";
 import {  tokenResponse, userEncodedInfo } from "../models/authModels";
-import { getRefreshDB } from "../controllers/auth/db/token";
+import { getRefreshDB, storeRefreshKey } from "../db/auth/token";
 
 const TOKEN_SETTINGS:{} = {expiresIn: '20s'}
 
 const Token = {
+
+
     createTokenPair: function (userInfo:userEncodedInfo):tokenResponse {
+
+        // token refresh is only one per user which is fineeee-ish, a problem that can 
+        // happen is if the user is trying to log in on different device they will be logged out on all other devices
 
         const token = jwt.sign(userInfo, process.env.PRIMARY_GEN_KEY,TOKEN_SETTINGS)
 
         // should be stored on db to make sure refresh token is valid
         const refresh = jwt.sign(userInfo, process.env.REFRESH_GEN_KEY)
-
+        storeRefreshKey(userInfo.userId, refresh)
         const response:tokenResponse = {
             token: token,
             refreshToken: refresh,
@@ -25,6 +30,7 @@ const Token = {
 
     refreshToken: function(refreshToken:string):tokenResponse | Error {
         //TODO needs to check if token is a valid refresh token in db
+        //also needs to check that the date is still valid 
 
         
 

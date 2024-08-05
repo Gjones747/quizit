@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express'
 import bodyParser from 'body-parser'
 
-import { createUser } from '../../user/db/user'
+import { createUser } from '../../../db/user/user'
 
 import { loginRequst, tokenResponse, userEncodedInfo, userCreateInfo } from '../../../models/authModels'
 import { validatePassword } from '../../../auth/validate'

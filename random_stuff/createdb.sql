@@ -13,6 +13,9 @@ CREATE TABLE Users (
 CREATE TABLE RefreshTokens (
     id INT AUTO_INCREMENT,
     user_id INT NOT NULL,
+    valid_until DATE NOT NULL,
     refresh_token TEXT NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    UNIQUE (user_id)
 );

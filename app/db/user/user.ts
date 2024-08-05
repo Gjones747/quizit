@@ -1,7 +1,7 @@
 import mysql from "mysql2"
 import dotenv from 'dotenv'
 import bcrypt from 'bcrypt'
-import { userCreateInfo, userEncodedInfo, userInfo } from "../../../models/authModels";
+import { userCreateInfo, userEncodedInfo, userInfo } from "../../models/authModels";
 
 dotenv.config();
 
